@@ -64,6 +64,14 @@ view: users {
     type: string
     sql: ${TABLE}.city;;
   }
+
+  dimension: age_tier{
+    type: tier
+    tiers: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    style: interval
+    sql: ${TABLE}.age;;
+  }
+
   measure: count {
     type: count
     drill_fields: [user_details*]

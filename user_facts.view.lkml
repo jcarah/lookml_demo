@@ -80,16 +80,26 @@ dimension: user_type {
         else 'repeat buyer' end;;
 }
 
+dimension: days_since_last_order{
+  type: number
+  sql: round(datediff(now(),${last_order_date_date}) ;;
+}
+
 ####### Measures #######
 
   measure:  avg_ltr{
     type: average
-    sql: ${TABLE}.lifetime_revenue ;;
+    sql: ${lifetime_revenue} ;;
   }
 
   measure:  avg_lto{
     type: average
-    sql: ${TABLE}.lifetime_orders ;;
+    sql: ${lifetime_orders} ;;
+  }
+
+  measure: avg_days_since_last_order {
+    type: average
+    sql: ${days_since_last_order} ;;
   }
 
 
