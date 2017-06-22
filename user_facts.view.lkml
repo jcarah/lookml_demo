@@ -16,6 +16,7 @@ view: user_facts {
           ;;
   }
 
+####### Dimensions #######
   dimension: user_id {
     type: number
     sql: ${TABLE}.user_id;;
@@ -35,22 +36,22 @@ view: user_facts {
 
   dimension_group: first_order_date {
     timeframes: [date,
-      day_of_month,
-      day_of_week,
-      month,
-      week,
-      year]
+                day_of_month,
+                day_of_week,
+                month,
+                week,
+                year]
     sql: ${TABLE}.first_order_date ;;
     type: time
   }
 
   dimension_group: last_order_date {
     timeframes: [date,
-      day_of_month,
-      day_of_week,
-      month,
-      week,
-      year]
+                day_of_month,
+                day_of_week,
+                month,
+                week,
+                year]
     sql: ${TABLE}.last_order_date ;;
     type: time
   }
@@ -65,6 +66,22 @@ view: user_facts {
     sql: ${TABLE}.lifetime_revenue ;;
   }
 
+dimension: is_paying_customer {
+  type: yesno
+  sql:  ${lifetime_orders} > 0 ;;
+}
+
+dimension: user_type {
+  type: string
+  sql: case when ${lifetime_orders} = 0
+          then 'never ordered'
+        when ${lifetime_orders} = 1
+          then 'one time buyer'
+        else 'repeat buyer' end;;
+}
+
+####### Measures #######
+
   measure:  avg_ltr{
     type: average
     sql: ${TABLE}.lifetime_revenue ;;
@@ -75,9 +92,11 @@ view: user_facts {
     sql: ${TABLE}.lifetime_orders ;;
   }
 
-  measure: count {
-    type:  count
-  }
+
+#   measure: count {
+#     type:  count
+#   }
+# Do I Need this ^
 
 
   # # You can specify the table name if it's different from the view name:
