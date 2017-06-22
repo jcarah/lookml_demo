@@ -1,9 +1,10 @@
 view: user_facts {
   derived_table: {
-    sql: select u.id user_id,
+    sql: select
+          u.id user_id,
           u.created_at signup_date
           count(*) lifetime_orders,
-          -- sum(sales_total) lifetime_revenue,
+          sum(sale_price) lifetime_revenue,
           min(o.created_at) first_order_date,
           max(o.created_at) last_order_date
           from users u
@@ -12,19 +13,73 @@ view: user_facts {
           join order_items i
           on o.id = i.order_id
           group by 1,2
-          limit 1
           ;;
   }
 
   dimension: user_id {
     type: number
     sql: ${TABLE}.user_id;;
+    primary_key: yes
   }
 
-#   dimension_group: signup_date {
-#     timeframes: []
-#
-#   }
+  dimension_group: signup_date {
+    timeframes: [date,
+                day_of_month,
+                day_of_week,
+                month,
+                week,
+                year]
+    sql: ${TABLE}.signup_date ;;
+    type: time
+  }
+
+  dimension_group: first_order_date {
+    timeframes: [date,
+      day_of_month,
+      day_of_week,
+      month,
+      week,
+      year]
+    sql: ${TABLE}.first_order_date ;;
+    type: time
+  }
+
+  dimension_group: last_order_date {
+    timeframes: [date,
+      day_of_month,
+      day_of_week,
+      month,
+      week,
+      year]
+    sql: ${TABLE}.last_order_date ;;
+    type: time
+  }
+
+  dimension: lifetime_orders {
+    type: number
+    sql: ${TABLE}.lifetime_orders ;;
+  }
+
+  dimension: lifetime_revenue {
+    type: number
+    sql: ${TABLE}.lifetime_revenue ;;
+  }
+
+  measure:  avg_ltr{
+    type: average
+    sql: ${TABLE}.lifetime_revenue ;;
+  }
+
+  measure:  avg_lto{
+    type: average
+    sql: ${TABLE}.lifetime_orders ;;
+  }
+
+  measure: count {
+    type:  count
+  }
+
+
   # # You can specify the table name if it's different from the view name:
   # sql_table_name: my_schema_name.tester ;;
   #
