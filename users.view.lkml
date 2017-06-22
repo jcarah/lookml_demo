@@ -1,39 +1,14 @@
 view: users {
   sql_table_name: demo_db.users ;;
-
   dimension: id {
-    primary_key: yes
     type: number
+    primary_key: yes
     sql: ${TABLE}.id ;;
   }
 
   dimension: age {
-    type: number
+    type:  number
     sql: ${TABLE}.age ;;
-  }
-
-  dimension: city {
-    type: string
-    sql: ${TABLE}.city ;;
-  }
-
-  dimension: country {
-    type: string
-    sql: ${TABLE}.country ;;
-  }
-
-  dimension_group: created {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    sql: ${TABLE}.created_at ;;
   }
 
   dimension: email {
@@ -43,43 +18,185 @@ view: users {
 
   dimension: first_name {
     type: string
-    sql: ${TABLE}.first_name ;;
+    sql:  ${TABLE}.first_name ;;
+  }
+
+  dimension: last_name  {
+    type: string
+    sql:  ${TABLE}.last_name ;;
   }
 
   dimension: gender {
     type: string
-    sql: ${TABLE}.gender ;;
+    sql:  ${TABLE}.gender ;;
   }
 
-  dimension: last_name {
+  dimension_group: created {
+    type: time
+    timeframes: [date,
+      day_of_month,
+      day_of_week,
+      day_of_week_index,
+      day_of_year,
+      hour_of_day,
+      month,
+      year]
+    datatype: timestamp
+    sql: ${TABLE}.created_at ;;
+    }
+
+  dimension: zip {
+    type: zipcode
+    sql:  ${TABLE}.zip ;;
+  }
+
+  dimension: country {
     type: string
-    sql: ${TABLE}.last_name ;;
+    sql: ${TABLE}.country;;
   }
 
   dimension: state {
     type: string
-    sql: ${TABLE}.state ;;
+    sql: ${TABLE}.country;;
   }
 
-  dimension: zip {
-    type: zipcode
-    sql: ${TABLE}.zip ;;
+  dimension: city {
+    type: string
+    sql: ${TABLE}.city;;
   }
-
   measure: count {
     type: count
-    drill_fields: [detail*]
+    drill_fields: [user_details*]
+
   }
 
-  # ----- Sets of fields for drilling ------
-  set: detail {
-    fields: [
-      id,
-      last_name,
-      first_name,
-      events.count,
-      orders.count,
-      user_data.count
+set: user_details {
+  fields: [age,
+    email,
+    city,
+    country,
+    created_date,
+    created_month,
+    created_year,
+    email,
+    first_name,
+    last_name,
+    gender
     ]
-  }
+
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#   dimension: id {
+#     primary_key: yes
+#     type: number
+#     sql: ${TABLE}.id ;;
+#   }
+#
+#   dimension: age {
+#     type: number
+#     sql: ${TABLE}.age ;;
+#   }
+#
+#   dimension: city {
+#     type: string
+#     sql: ${TABLE}.city ;;
+#   }
+#
+#   dimension: country {
+#     type: string
+#     sql: ${TABLE}.country ;;
+#   }
+#
+#   dimension_group: created {
+#     type: time
+#     timeframes: [
+#       raw,
+#       time,
+#       date,
+#       week,
+#       month,
+#       quarter,
+#       year
+#     ]
+#     sql: ${TABLE}.created_at ;;
+#   }
+#
+#   dimension: email {
+#     type: string
+#     sql: ${TABLE}.email ;;
+#   }
+#
+#   dimension: first_name {
+#     type: string
+#     sql: ${TABLE}.first_name ;;
+#   }
+#
+#   dimension: gender {
+#     type: string
+#     sql: ${TABLE}.gender ;;
+#   }
+#
+#   dimension: last_name {
+#     type: string
+#     sql: ${TABLE}.last_name ;;
+#   }
+#
+#   dimension: state {
+#     type: string
+#     sql: ${TABLE}.state ;;
+#   }
+#
+#   dimension: zip {
+#     type: zipcode
+#     sql: ${TABLE}.zip ;;
+#   }
+#
+#   measure: count {
+#     type: count
+#     drill_fields: [detail*]
+#   }
+#
+#   # ----- Sets of fields for drilling ------
+#   set: detail {
+#     fields: [
+#       id,
+#       last_name,
+#       first_name,
+#       events.count,
+#       orders.count,
+#       user_data.count
+#     ]
+#   }
+# }
