@@ -2,7 +2,7 @@ view: user_facts {
   derived_table: {
     sql: select
           u.id user_id,
-          u.created_at signup_date
+          u.created_at signup_date,
           count(*) lifetime_orders,
           sum(sale_price) lifetime_revenue,
           min(o.created_at) first_order_date,
