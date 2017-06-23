@@ -10,7 +10,7 @@ view: user_facts {
           from users u
           left join orders o
           on u.id = o.user_id
-          join order_items i
+          left join order_items i
           on o.id = i.order_id
           group by 1,2
           ;;
