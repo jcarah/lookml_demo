@@ -23,4 +23,10 @@ explore:users {
     sql_on: ${users.id} = ${user_facts.user_id} ;;
     relationship: one_to_one
   }
+  join: order_facts {
+    view_label: "Orders"
+    type:  left_outer
+    sql_on: ${order_facts.order_id} = ${orders.id} ;;
+    relationship: one_to_one
+  }
 }
