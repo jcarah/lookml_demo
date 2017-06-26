@@ -79,17 +79,19 @@ view: users {
   }
 
 set: user_details {
-  fields: [age,
-    email,
-    city,
-    country,
-    created_date,
-    created_month,
-    created_year,
-    email,
-    first_name,
-    last_name,
-    gender,
+  fields: [
+      age,
+#     email,
+#     city,
+#     country,
+#     created_date,
+#     created_month,
+#     created_year,
+#     email,
+#     first_name,
+#     last_name,
+#     gender,
+    users.*,
     user_facts.*
     ]
 
