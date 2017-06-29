@@ -1,5 +1,5 @@
 - dashboard: ecommerce_overview
-  title: Event Activity
+  title: Ecommerce overview
   layout: grid
   load_configuration: wait
   refresh_interval: 4 hours
