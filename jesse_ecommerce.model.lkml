@@ -7,7 +7,6 @@ include: "*.view"
 include: "*.dashboard"
 
 explore:users {
-  sql_always_where: ${order_items.returned_date} is null ;;
   join: orders {
     type: left_outer
     sql_on: ${users.id} = ${orders.user_id} ;;
