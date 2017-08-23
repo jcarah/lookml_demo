@@ -32,7 +32,19 @@ view: order_items {
     ]
     sql: ${TABLE}.returned_at ;;
   }
-
+  dimension_group: returned_on {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: date_add(${orders.created_at}, interval 5 day) ;;
+  }
   dimension: sale_price {
     type: number
     sql: ${TABLE}.sale_price ;;
